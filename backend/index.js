@@ -29,6 +29,9 @@ app.use('/api/auth', authRoutes);
 const jobAppRoutes = require('./routes/jobApplications');
 app.use('/api/job-applications', jobAppRoutes);
 
+const reminderRoutes = require('./routes/reminders');
+app.use('/api/reminders', reminderRoutes);
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
