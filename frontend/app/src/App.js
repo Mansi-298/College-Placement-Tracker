@@ -33,6 +33,19 @@ function App() {
     }
   };
 
+    // Handle job application submission
+    const handleJobSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        await createJobApplication({ ...jobForm, student: user.id });
+        setMessage('Job application submitted!');
+        setJobForm({ company: '', position: '', status: 'applied' });
+        fetchJobApps();
+      } catch (err) {
+        setMessage(err.response.data.error);
+      }
+    };
+
   
     // Fetch job applications for the logged-in student
     const fetchJobApps = async () => {
@@ -40,7 +53,12 @@ function App() {
       const res = await getJobApplications(user.id);
       setJobApps(res.data);
     };
-    
+
+      // Fetch job applications when user logs in
+  React.useEffect(() => {
+    if (user) fetchJobApps();
+  }, [user]);
+
   return (
     <div>
       <h2>Register</h2>
