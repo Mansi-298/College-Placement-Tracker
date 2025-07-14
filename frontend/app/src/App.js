@@ -80,6 +80,33 @@ function App() {
         <button type="submit">Login</button>
       </form>
 
+      {user && user.role === 'student' && (
+        <div>
+          <h2>Log Job Application</h2>
+          <form onSubmit={handleJobSubmit}>
+            <input placeholder="Company" value={jobForm.company} onChange={e => setJobForm({ ...jobForm, company: e.target.value })} />
+            <input placeholder="Position" value={jobForm.position} onChange={e => setJobForm({ ...jobForm, position: e.target.value })} />
+            <select value={jobForm.status} onChange={e => setJobForm({ ...jobForm, status: e.target.value })}>
+              <option value="applied">Applied</option>
+              <option value="shortlisted">Shortlisted</option>
+              <option value="interview">Interview</option>
+              <option value="offered">Offered</option>
+              <option value="rejected">Rejected</option>
+            </select>
+            <button type="submit">Add Application</button>
+          </form>
+
+          <h3>Your Job Applications</h3>
+          <ul>
+            {jobApps.map(app => (
+              <li key={app._id}>
+                {app.company} - {app.position} ({app.status})
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <div>{message}</div>
     </div>
   );
