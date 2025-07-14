@@ -13,3 +13,15 @@ router.post('/', async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
+
+// Get all reminders for a user
+router.get('/user/:userId', async (req, res) => {
+    try {
+      const reminders = await Reminder.find({ user: req.params.userId });
+      res.json(reminders);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+  
+  module.exports = router;
