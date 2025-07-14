@@ -33,6 +33,14 @@ function App() {
     }
   };
 
+  
+    // Fetch job applications for the logged-in student
+    const fetchJobApps = async () => {
+      if (!user) return;
+      const res = await getJobApplications(user.id);
+      setJobApps(res.data);
+    };
+    
   return (
     <div>
       <h2>Register</h2>
