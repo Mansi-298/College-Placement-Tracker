@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import { register, login } from './services/api';
+import { register, login, createJobApplication, getJobApplications } from './services/api';
 
 function App() {
   const [form, setForm] = useState({ name: '', email: '', password: '', role: 'student' });
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
   const [message, setMessage] = useState('');
+
+  const [user, setUser] = useState(null);
+  const [jobForm, setJobForm] = useState({ company: '', position: '', status: 'applied' });
+  const [jobApps, setJobApps] = useState([]);
+
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -16,11 +21,13 @@ function App() {
     }
   };
 
+  // Update handleLogin to save user info
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const res = await login(loginForm);
       setMessage(res.data.message + ' | Welcome, ' + res.data.user.name);
+      setUser(res.data.user); // Save user info
     } catch (err) {
       setMessage(err.response.data.error);
     }
