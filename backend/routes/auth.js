@@ -31,4 +31,14 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// Get all students (TPO view)
+router.get('/students', async (req, res) => {
+  try {
+    const students = await User.find({ role: 'student' }, 'name email');
+    res.json(students);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;

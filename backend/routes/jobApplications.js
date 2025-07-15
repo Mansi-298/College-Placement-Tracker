@@ -24,4 +24,14 @@ router.get('/student/:studentId', async (req, res) => {
   }
 });
 
+// Get all job applications (TPO view)
+router.get('/', async (req, res) => {
+  try {
+    const jobApps = await JobApplication.find().populate('student', 'name email');
+    res.json(jobApps);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
