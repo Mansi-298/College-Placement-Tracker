@@ -11,6 +11,8 @@ export const login = (data) => API.post('/auth/login', data);
 // Job Applications
 export const createJobApplication = (data) => API.post('/job-applications', data);
 export const getJobApplications = (studentId) => API.get(`/job-applications/student/${studentId}`);
+export const getAllJobApplications = () => API.get('/job-applications');
+export const getAllStudents = () => API.get('/auth/students');
 
 // Reminders
 export const createReminder = (data) => API.post('/reminders', data);
