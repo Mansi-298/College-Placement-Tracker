@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { register, login, createJobApplication, getJobApplications } from './services/api';
 import { createReminder, getReminders } from './services/api';
+import { getAllJobApplications, getAllStudents } from './services/api';
+import './App.css';
 
 function App() {
   const [form, setForm] = useState({ name: '', email: '', password: '', role: 'student' });
@@ -110,8 +112,9 @@ function App() {
   }, [user]);
 
   return (
-    <div>
-      <h2>Register</h2>
+    <div className="app-container">
+      <h2>College Placement Tracker</h2>
+      {!user && <h3>Register</h3>}
       <form onSubmit={handleRegister}>
         <input placeholder="Name" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
         <input placeholder="Email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
@@ -123,12 +126,21 @@ function App() {
         <button type="submit">Register</button>
       </form>
 
-      <h2>Login</h2>
+      {!user && <h3>Login</h3>}
       <form onSubmit={handleLogin}>
         <input placeholder="Email" value={loginForm.email} onChange={e => setLoginForm({ ...loginForm, email: e.target.value })} />
         <input placeholder="Password" type="password" value={loginForm.password} onChange={e => setLoginForm({ ...loginForm, password: e.target.value })} />
         <button type="submit">Login</button>
       </form>
+
+      {user && (
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+          <div>
+            Logged in as <b>{user.name}</b> ({user.role})
+          </div>
+          <button onClick={() => setUser(null)}>Logout</button>
+        </div>
+      )}
 
       {user && user.role === 'student' && (
         <div>
@@ -202,7 +214,7 @@ function App() {
         </div>
       )}
 
-      <div>{message}</div>
+      <div className="message">{message}</div>
     </div>
   );
 }
